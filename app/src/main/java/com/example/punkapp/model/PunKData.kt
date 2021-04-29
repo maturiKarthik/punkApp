@@ -1,21 +1,26 @@
 package com.example.punkapp.model
 
-import com.google.gson.annotations.SerializedName
+import androidx.annotation.NonNull
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "punk_beer")
 data class PunKData(
     val id: Int?,
     val name: String?,
-    @SerializedName("first_brewed")
-    val originDate: String?,
+    val first_brewed: String?,
     val description: String?,
     val image_url: String,
     val abv: Float,
     val ibu: Float,
-    @SerializedName(" targer_fg")
-    val fg: Long,
+    val targer_fg: Long,
     val target_og: Double,
     val ebc: Float,
     val srm: Float,
     val ph: Float,
     val attenuation_level: Float
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    var uid: Int = 0
+}

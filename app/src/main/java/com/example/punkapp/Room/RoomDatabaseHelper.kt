@@ -43,4 +43,8 @@ class RoomDatabaseHelper {
     suspend fun getAll(): List<PunKData>? {
         return punkDao?.getAllBeers()
     }
+
+    suspend fun findById(id:Int): PunKData? {
+        return punkDao?.findById(id)
+    }
 }

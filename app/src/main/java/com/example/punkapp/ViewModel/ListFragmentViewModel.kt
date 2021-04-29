@@ -17,17 +17,28 @@ class ListFragmentViewModel(application: Application) : BaseViewModel(applicatio
     val loadingData = MutableLiveData<Boolean>()
     val listOfData = MutableLiveData<List<PunKData>>()
     val errorMessage = MutableLiveData<Boolean>()
+    private val intervalTime = 300000000000L
+
+    fun loadContent() {
+        val lastTime = Repository.sharedPrefHelper.getTime()
+        lastTime.let {
+            if (it != 0L && System.nanoTime() - it!! < intervalTime) {
+                loadDataFromDb()
+            } else {
+                loadDataFromServer()
+            }
+        }
+    }
 
     fun refresh() {
-        //loadDataFromServer()
-        loadDataFromDb()
+        loadDataFromServer()
     }
 
     private fun loadDataFromServer() {
         Repository.retrofitHelper.getAllBeersList()?.enqueue(object : Callback<List<PunKData>> {
             override fun onFailure(call: Call<List<PunKData>>, t: Throwable) {
                 loadingData.value = false
-                errorMessage.value = true
+                errorMessage.value = false
                 Log.e("error", t.toString())
             }
 
@@ -35,10 +46,13 @@ class ListFragmentViewModel(application: Application) : BaseViewModel(applicatio
                 call: Call<List<PunKData>>,
                 response: Response<List<PunKData>>
             ) {
+                Toast.makeText(getApplication(), "Load From Api", Toast.LENGTH_LONG).show()
                 insertInToDb(response.body()!!)
                 listOfData.value = response.body()
                 loadingData.value = false
                 errorMessage.value = false
+
+                Repository.sharedPrefHelper.setTime(System.nanoTime())
             }
 
         })
@@ -48,6 +62,7 @@ class ListFragmentViewModel(application: Application) : BaseViewModel(applicatio
         launch {
             Repository.roomDatabaseHelper.deleteAll()
             Repository.roomDatabaseHelper.insertAll(punk_beer)
+
         }
     }
 

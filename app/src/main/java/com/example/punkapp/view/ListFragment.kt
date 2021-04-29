@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 class ListFragment : Fragment() {
 
     private lateinit var listFragmentViewModel: ListFragmentViewModel
-    private  var recyclerViewAdapter: RecyclerViewAdapter = RecyclerViewAdapter(arrayListOf())
+    private var recyclerViewAdapter: RecyclerViewAdapter = RecyclerViewAdapter(arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,10 +29,15 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listFragmentViewModel = ViewModelProviders.of(this).get(ListFragmentViewModel::class.java)
-        listFragmentViewModel.refresh()
+        listFragmentViewModel.loadContent()
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = recyclerViewAdapter
+        }
+
+        refreshApp.setOnRefreshListener {
+            listFragmentViewModel.refresh()
+            refreshApp.isRefreshing = false // Stopping the refresh
         }
         observe()
     }
@@ -47,7 +52,7 @@ class ListFragment : Fragment() {
         })
 
         listFragmentViewModel.errorMessage.observe(viewLifecycleOwner, Observer {
-            if (!it) error_msg.visibility = View.GONE
+            if (it) error_msg.visibility = View.VISIBLE else error_msg.visibility = View.GONE
         })
     }
 }

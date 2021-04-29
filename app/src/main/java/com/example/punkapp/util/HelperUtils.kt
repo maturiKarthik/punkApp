@@ -2,7 +2,7 @@ package com.example.punkapp.util
 
 import android.content.Context
 import android.widget.ImageView
-import androidx.databinding.Bindable
+import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 
@@ -15,7 +15,8 @@ private fun progressDrawable(context: Context): CircularProgressDrawable {
     return circularProgressDrawable
 }
 
-fun ImageView.loadUrl(view: ImageView, url: String) {
+@BindingAdapter("android:loadImage")
+fun loadUrl(view: ImageView, url: String?) {
     val context = view.context
     Glide.with(context).load(url).placeholder(progressDrawable(context)).into(view)
 

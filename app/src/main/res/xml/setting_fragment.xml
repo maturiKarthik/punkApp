@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue="5"
+        android:key="refresh_Interval"
+        android:title="Set Refresh Time In Minutes" />
+
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="LOAD_DB"
+        android:title="Load Data From Cache" />
+
+
+</PreferenceScreen>

@@ -17,15 +17,27 @@ class ListFragmentViewModel(application: Application) : BaseViewModel(applicatio
     val loadingData = MutableLiveData<Boolean>()
     val listOfData = MutableLiveData<List<PunKData>>()
     val errorMessage = MutableLiveData<Boolean>()
-    private val intervalTime = 300000000000L
 
     fun loadContent() {
+        val loadDataFromDb = Repository.sharedPrefHelper.getLoadDataFromCache()
+        var intervalTime = Repository.sharedPrefHelper.getRefreshTime()?.toLong()
+        Log.d("TEST", "Time interval $intervalTime")
+        intervalTime = intervalTime?.times(60)?.times(1000)?.times(1000)?.times(1000)
         val lastTime = Repository.sharedPrefHelper.getTime()
-        lastTime.let {
-            if (it != 0L && System.nanoTime() - it!! < intervalTime) {
+
+        when {
+            (loadDataFromDb == true) -> {
+                Log.d("TEST", "Loading from DB")
                 loadDataFromDb()
-            } else {
-                loadDataFromServer()
+            }
+            else -> {
+                lastTime.let {
+                    if (it != 0L && System.nanoTime() - it!! < intervalTime!!) {
+                        loadDataFromDb()
+                    } else {
+                        loadDataFromServer()
+                    }
+                }
             }
         }
     }
@@ -38,7 +50,7 @@ class ListFragmentViewModel(application: Application) : BaseViewModel(applicatio
         Repository.retrofitHelper.getAllBeersList()?.enqueue(object : Callback<List<PunKData>> {
             override fun onFailure(call: Call<List<PunKData>>, t: Throwable) {
                 loadingData.value = false
-                errorMessage.value = false
+                errorMessage.value = true
                 Log.e("error", t.toString())
             }
 

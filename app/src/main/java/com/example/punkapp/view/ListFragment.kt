@@ -1,12 +1,11 @@
 package com.example.punkapp.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.punkapp.R
 import com.example.punkapp.ViewModel.ListFragmentViewModel
@@ -39,6 +38,7 @@ class ListFragment : Fragment() {
             listFragmentViewModel.refresh()
             refreshApp.isRefreshing = false // Stopping the refresh
         }
+        setHasOptionsMenu(true)
         observe()
     }
 
@@ -54,5 +54,21 @@ class ListFragment : Fragment() {
         listFragmentViewModel.errorMessage.observe(viewLifecycleOwner, Observer {
             if (it) error_msg.visibility = View.VISIBLE else error_msg.visibility = View.GONE
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.setting -> {
+                // Toast.makeText(context, "Setting clicked", Toast.LENGTH_SHORT).show()
+                val settingaction = ListFragmentDirections.actionListFragmentToSetting2()
+                Navigation.findNavController(this.requireView()).navigate(settingaction)
+            }
+        }
+        return true
     }
 }

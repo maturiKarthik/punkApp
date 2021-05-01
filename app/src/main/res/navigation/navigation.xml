@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_listFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_setting2"
+            app:destination="@id/setting2" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -27,4 +30,8 @@
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>
+    <fragment
+        android:id="@+id/setting2"
+        android:name="com.example.punkapp.view.Setting"
+        android:label="Setting" />
 </navigation>

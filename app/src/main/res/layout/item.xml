@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <!-- Every time you add a variable you need to attach it in the Corresponding class -->
@@ -15,50 +16,71 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:onClick="@{clickListener::onBeerClicked}"
-        android:orientation="horizontal">
+        android:layout_height="180dp"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/uid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{String.valueOf(punkData.id)}"
-            android:visibility="invisible" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:loadImage="@{punkData.image_url.toString()}"
-            android:padding="4dp" />
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.App.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{clickListener::onBeerClicked}"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/colorPrimaryDark"
+            app:strokeWidth="1dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="3"
-            android:orientation="vertical"
-            android:padding="4dp">
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="4dp"
-                android:text="@{punkData.name}" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="4dp"
-                android:text="@{punkData.description}" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/uid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(punkData.id)}"
+                    android:visibility="invisible" />
 
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:loadImage="@{punkData.image_url.toString()}"
+                    android:padding="4dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@{punkData.name}" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="@{punkData.first_brewed}" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </layout>

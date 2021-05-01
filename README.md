@@ -10,7 +10,7 @@ This app displays the data form Punk API an openSource api that displays the lis
 
 
 
-My main object was to brush my skills on the jetpack library of androidx which are the recommended architecture pattern by google and most of the companies around the world . This app uses the MVVM [Architectual Pattern] , LiveData, Databinding , Navigation and other proven therad safe approach to access the objects. The language used to code is kotline[kotlin_version = "1.3.72"] and many more.
+My main object was to brush my skills on the jetpack library of androidx which are the recommended architecture pattern by google and most of the companies around the world . This app uses the MVVM [Architectual Pattern] , LiveData, Databinding , Navigation , Offline Mode[ inside setting `loadfromcache`] and other proven therad safe approach to access the objects. The language used to code is kotline[kotlin_version = "1.3.72"] and many more.
 
 
 

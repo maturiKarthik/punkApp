@@ -62,6 +62,7 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     // ROOM + coroutines
     kapt "androidx.room:room-compiler:$roomVersion"
